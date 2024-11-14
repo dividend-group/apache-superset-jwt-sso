@@ -5,12 +5,9 @@ from flask_appbuilder.security.views import expose
 from flask_appbuilder.security.manager import BaseSecurityManager
 from flask_login import login_user, logout_user
 from datetime import datetime
-from config import JWT_ALGORITHM, JWT_EXPIRATION, JWT_SECRET
-
-
+from jwt_sso.config import JWT_ALGORITHM, JWT_EXPIRATION, JWT_SECRET
 import jwt
 
-# L
 class JWTDecoder:
     def __init__(self, secret_key, algorithm = 'HS256'):
         self.secret_key = secret_key
