@@ -1,0 +1,3 @@
+JWT_ALGORITHM="HS256"
+JWT_SECRET="your-secret-key-here"
+JWT_EXPIRATION=3600

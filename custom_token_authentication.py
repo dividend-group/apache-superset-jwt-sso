@@ -5,12 +5,12 @@ from flask_appbuilder.security.views import expose
 from flask_appbuilder.security.manager import BaseSecurityManager
 from flask_login import login_user, logout_user
 from datetime import datetime
-from dotenv import load_dotenv
-import os
+from config import JWT_ALGORITHM, JWT_EXPIRATION, JWT_SECRET
+
+
 import jwt
 
-# Load environment variables from .env file
-load_dotenv()
+# L
 class JWTDecoder:
     def __init__(self, secret_key, algorithm = 'HS256'):
         self.secret_key = secret_key
@@ -48,9 +48,6 @@ class CustomAuthDBView(AuthDBView):
         if request.args.get('token') is not None:
             token = request.args.get('token')
             
-        # This should match your Laravel JWT_SECRET
-        JWT_SECRET    = os.getenv('JWT_SECRET_KEY')
-        JWT_ALGORITHM = os.getenv('JWT_ALGORITHM')
         
         decoder = JWTDecoder(secret_key=JWT_SECRET, algorithm=JWT_ALGORITHM)
     
