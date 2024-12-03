@@ -45,7 +45,8 @@ class CustomAuthDBView(AuthDBView):
         if request.args.get('token') is not None:
             token = request.args.get('token')
             
-        
+        if token == '':
+            return super().login()
         decoder = JWTDecoder(secret_key=JWT_SECRET, algorithm=JWT_ALGORITHM)
     
         try:
