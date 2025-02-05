@@ -36,6 +36,7 @@ class CustomAuthDBView(AuthDBView):
     def login(self):
         authsuccess  = False
         token        = ''
+        dashboard    = ''
         redirect_url = self.appbuilder.get_url_for_index
         user         = None
         
@@ -44,6 +45,9 @@ class CustomAuthDBView(AuthDBView):
 
         if request.args.get('token') is not None:
             token = request.args.get('token')
+            
+        if request.args.get('dashboard') is not None:
+            dashboard = request.args.get('dashboard')
             
         if token == '':
             return super().login()
@@ -68,8 +72,11 @@ class CustomAuthDBView(AuthDBView):
             return redirect(redirect_url)
 
         if authsuccess:
-            login_user(user, remember=False)
-            return redirect(redirect_url)
+            login_user(user, remember=True)
+            if dashboard == '':
+                return redirect(redirect_url)
+            
+            return redirect(f"{redirect_url}superset/dashboard/{dashboard}")
         else:
             flash('Auto Login Failed', 'warning')
             return super().login()
